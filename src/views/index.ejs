@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Resume Screener | Job Portal</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary: #4361ee;
+        --secondary: #3a0ca3;
+        --accent: #f72585;
+        --light: #f8f9fa;
+        --dark: #212529;
+        --success: #4cc9f0;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+
+      body {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+      }
+
+      .container {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+        width: 100%;
+        max-width: 800px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+      }
+
+      .container::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 10px;
+        background: linear-gradient(90deg, var(--primary), var(--accent));
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        margin-bottom: 30px;
+        color: var(--dark);
+        position: relative;
+        display: inline-block;
+      }
+
+      h1::after {
+        content: "";
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 4px;
+        background: var(--accent);
+        border-radius: 2px;
+      }
+
+      .nav-links {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+
+      .nav-links a {
+        text-decoration: none;
+        padding: 12px 25px;
+        border-radius: 50px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+        min-width: 180px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .nav-links a::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        transition: all 0.3s ease;
+      }
+
+      .nav-links a:first-child {
+        background: linear-gradient(
+          135deg,
+          var(--primary) 0%,
+          var(--secondary) 100%
+        );
+        color: white;
+        box-shadow: 0 5px 15px rgba(67, 97, 238, 0.4);
+      }
+
+      .nav-links a:nth-child(2) {
+        background: linear-gradient(135deg, var(--accent) 0%, #b5179e 100%);
+        color: white;
+        box-shadow: 0 5px 15px rgba(247, 37, 133, 0.4);
+      }
+
+      .nav-links a:last-child {
+        background: linear-gradient(135deg, var(--success) 0%, #4895ef 100%);
+        color: white;
+        box-shadow: 0 5px 15px rgba(76, 201, 240, 0.4);
+      }
+
+      .nav-links a:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+      }
+
+      .nav-links a:hover::before {
+        transform: scale(1.05);
+      }
+
+      .nav-links a:active {
+        transform: translateY(0);
+      }
+
+      .nav-links a i {
+        margin-right: 8px;
+        font-size: 1.1rem;
+      }
+
+      /* Floating AI elements */
+      .ai-element {
+        position: absolute;
+        opacity: 0.1;
+        z-index: -1;
+      }
+
+      .ai-element-1 {
+        top: 20px;
+        right: 50px;
+        font-size: 100px;
+      }
+
+      .ai-element-2 {
+        bottom: 30px;
+        left: 60px;
+        font-size: 80px;
+      }
+
+      /* Responsive design */
+      @media (max-width: 768px) {
+        .container {
+          padding: 30px 20px;
+        }
+
+        h1 {
+          font-size: 2rem;
+        }
+
+        .nav-links {
+          flex-direction: column;
+          gap: 15px;
+        }
+
+        .nav-links a {
+          width: 100%;
+        }
+      }
+    </style>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div class="ai-element ai-element-1">🤖</div>
+      <div class="ai-element ai-element-2">⚡</div>
+
+      <h1>Welcome to AI Resume Screener</h1>
+      <div class="nav-links">
+        <a href="/jobs/new"><i class="fas fa-plus-circle"></i> Post a Job</a>
+        <a href="/all-jobs"><i class="fas fa-briefcase"></i> View All Jobs</a>
+        <a href="/all-applications"><i class="fas fa-file-alt"></i> Applications</a>
+      </div>
+    </div>
+  </body>
+</html>

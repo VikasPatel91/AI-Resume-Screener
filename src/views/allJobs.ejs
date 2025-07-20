@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>All Job Listings | AI Resume Screener</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <style>
+      :root {
+        --primary: #4361ee;
+        --secondary: #3a0ca3;
+        --accent: #f72585;
+        --danger: #e63946;
+        --light: #f8f9fa;
+        --dark: #212529;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+
+      body {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        padding: 40px 20px;
+        color: var(--dark);
+      }
+
+      .container {
+        max-width: 1000px;
+        margin: 0 auto;
+      }
+
+      header {
+        text-align: center;
+        margin-bottom: 40px;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        color: var(--dark);
+        margin-bottom: 10px;
+        position: relative;
+        display: inline-block;
+      }
+
+      h1::after {
+        content: "";
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 4px;
+        background: linear-gradient(90deg, var(--primary), var(--accent));
+        border-radius: 2px;
+      }
+
+      .job-count {
+        color: #6c757d;
+        font-size: 1rem;
+      }
+
+      .job-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 25px;
+      }
+
+      .job-card {
+        background: white;
+        border-radius: 12px;
+        padding: 25px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+      }
+
+      .job-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      }
+
+      .job-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 5px;
+        height: 100%;
+        background: linear-gradient(to bottom, var(--primary), var(--accent));
+      }
+
+      .job-title {
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: var(--dark);
+        margin-bottom: 10px;
+      }
+
+      .job-description-container {
+        flex-grow: 1;
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 20px;
+      }
+
+      .job-description {
+        color: #495057;
+        font-size: 0.95rem;
+        line-height: 1.6;
+        margin-bottom: 10px;
+      }
+
+      .read-more {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        padding: 20px 0 5px;
+        background: linear-gradient(
+          to bottom,
+          rgba(255, 255, 255, 0),
+          white 70%
+        );
+        color: var(--primary);
+        font-weight: 500;
+        cursor: pointer;
+        display: none;
+      }
+
+      .job-actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: auto;
+        padding-top: 15px;
+        border-top: 1px solid #eee;
+      }
+
+      .btn {
+        padding: 8px 16px;
+        border-radius: 6px;
+        font-weight: 500;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        text-decoration: none;
+      }
+
+      .btn-view {
+        background: linear-gradient(
+          135deg,
+          var(--primary) 0%,
+          var(--secondary) 100%
+        );
+        color: white;
+      }
+
+      .btn-view:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(67, 97, 238, 0.3);
+      }
+
+      .btn-delete {
+        background: var(--danger);
+        color: white;
+        border: none;
+      }
+
+      .btn-delete:hover {
+        background: #c1121f;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(230, 57, 70, 0.3);
+      }
+
+      .empty-state {
+        text-align: center;
+        padding: 50px;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        grid-column: 1 / -1;
+      }
+
+      .empty-state i {
+        font-size: 3rem;
+        color: #adb5bd;
+        margin-bottom: 20px;
+      }
+
+      .empty-state p {
+        color: #6c757d;
+        font-size: 1.1rem;
+      }
+
+      @media (max-width: 768px) {
+        h1 {
+          font-size: 2rem;
+        }
+
+        .job-list {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>All Job Listings</h1>
+        <p class="job-count">
+          <%= jobs.length %> <%= jobs.length === 1 ? 'job' : 'jobs' %> available
+        </p>
+      </header>
+
+      <div class="job-list">
+        <% if (jobs.length === 0) { %>
+        <div class="empty-state">
+          <i class="fas fa-briefcase"></i>
+          <p>No job listings available. Post a new job to get started!</p>
+        </div>
+        <% } %> <% jobs.forEach(job => { %>
+        <div class="job-card">
+          <h3 class="job-title"><%= job.title %></h3>
+          <div class="job-description-container">
+            <div class="job-description" id="desc-<%= job.id %>">
+              <%= job.description %>
+            </div>
+            <div
+              class="read-more"
+              onclick="toggleDescription('desc-<%= job.id %>', this)"
+            >
+              Read More <i class="fas fa-chevron-down"></i>
+            </div>
+          </div>
+          <div class="job-actions">
+            <a href="/job/<%= job.id %>/apply" class="btn btn-view">
+              <i class="fas fa-eye"></i> View & Apply
+            </a>
+            <form
+              action="/jobs/<%= job.id %>?_method=DELETE"
+              method="POST"
+              style="display: inline"
+            >
+              <button type="submit" class="btn btn-delete">
+                <i class="fas fa-trash-alt"></i> Delete
+              </button>
+            </form>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+    </div>
+
+    <script>
+      // Check descriptions on load and add "Read More" if needed
+      document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll(".job-description").forEach((desc) => {
+          const container = desc.parentElement;
+          const readMore = container.querySelector(".read-more");
+
+          if (desc.scrollHeight > container.clientHeight) {
+            readMore.style.display = "block";
+          }
+        });
+      });
+
+      function toggleDescription(id, element) {
+        const desc = document.getElementById(id);
+        const container = desc.parentElement;
+
+        if (desc.style.webkitLineClamp) {
+          desc.style.webkitLineClamp = "unset";
+          element.innerHTML = 'Show Less <i class="fas fa-chevron-up"></i>';
+          container.style.overflow = "visible";
+        } else {
+          desc.style.webkitLineClamp = "3";
+          element.innerHTML = 'Read More <i class="fas fa-chevron-down"></i>';
+          container.style.overflow = "hidden";
+        }
+      }
+    </script>
+  </body>
+</html>

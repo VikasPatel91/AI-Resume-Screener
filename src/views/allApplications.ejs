@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Job Applications | AI Resume Screener</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <style>
+      :root {
+        --primary: #4361ee;
+        --secondary: #3a0ca3;
+        --accent: #f72585;
+        --danger: #e63946;
+        --success: #38b000;
+        --light: #f8f9fa;
+        --dark: #212529;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+
+      body {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        padding: 40px 20px;
+        color: var(--dark);
+      }
+
+      .container {
+        max-width: 1000px;
+        margin: 0 auto;
+      }
+
+      header {
+        text-align: center;
+        margin-bottom: 40px;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        color: var(--dark);
+        margin-bottom: 10px;
+        position: relative;
+        display: inline-block;
+      }
+
+      h1::after {
+        content: "";
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 4px;
+        background: linear-gradient(90deg, var(--primary), var(--accent));
+        border-radius: 2px;
+      }
+
+      .job-group {
+        background: white;
+        border-radius: 12px;
+        padding: 30px;
+        margin-bottom: 30px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      }
+
+      .job-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #eee;
+      }
+
+      .job-title {
+        font-size: 1.4rem;
+        color: var(--primary);
+        font-weight: 600;
+      }
+
+      .application-count {
+        background: var(--light);
+        color: var(--dark);
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: 500;
+      }
+
+      .application-card {
+        background: #f9fafb;
+        border-radius: 10px;
+        padding: 25px;
+        margin-bottom: 20px;
+        border-left: 4px solid var(--primary);
+        transition: all 0.3s ease;
+      }
+
+      .application-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+      }
+
+      .application-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 15px;
+      }
+
+      .applicant-name {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: var(--dark);
+      }
+
+      .applicant-email {
+        color: #6c757d;
+        font-size: 0.9rem;
+        margin-bottom: 15px;
+      }
+
+      .score-badge {
+        background: linear-gradient(135deg, var(--success) 0%, #38b000 100%);
+        color: white;
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: 600;
+      }
+
+      .detail-section {
+        margin-bottom: 15px;
+      }
+
+      .detail-label {
+        font-weight: 600;
+        color: #495057;
+        margin-bottom: 5px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .detail-label i {
+        color: var(--primary);
+        font-size: 0.9rem;
+      }
+
+      .detail-content {
+        color: #343a40;
+        line-height: 1.6;
+        padding-left: 25px;
+      }
+
+      .actions {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 20px;
+      }
+
+      .btn {
+        padding: 8px 16px;
+        border-radius: 6px;
+        font-weight: 500;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        text-decoration: none;
+        border: none;
+      }
+
+      .btn-delete {
+        background: var(--danger);
+        color: white;
+      }
+
+      .btn-delete:hover {
+        background: #c1121f;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(230, 57, 70, 0.3);
+      }
+
+      .empty-state {
+        text-align: center;
+        padding: 50px;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      }
+
+      .empty-state i {
+        font-size: 3rem;
+        color: #adb5bd;
+        margin-bottom: 20px;
+      }
+
+      .empty-state p {
+        color: #6c757d;
+        font-size: 1.1rem;
+      }
+
+      @media (max-width: 768px) {
+        h1 {
+          font-size: 2rem;
+        }
+
+        .application-header {
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        .job-header {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 10px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Job Applications</h1>
+      </header>
+
+      <% const grouped = {}; applications.forEach(app => { if
+      (!grouped[app.jobTitle]) grouped[app.jobTitle] = [];
+      grouped[app.jobTitle].push(app); }); %> <% if (applications.length === 0)
+      { %>
+      <div class="empty-state">
+        <i class="fas fa-file-alt"></i>
+        <p>
+          No applications found. Applicants will appear here when they apply.
+        </p>
+      </div>
+      <% } else { %> <% Object.keys(grouped).forEach(jobTitle => { %>
+      <div class="job-group">
+        <div class="job-header">
+          <h2 class="job-title"><%= jobTitle %></h2>
+          <span class="application-count"
+            ><%= grouped[jobTitle].length %> <%= grouped[jobTitle].length === 1
+            ? 'application' : 'applications' %></span
+          >
+        </div>
+
+        <% grouped[jobTitle].forEach(app => { %>
+        <div class="application-card">
+          <div class="application-header">
+            <div>
+              <h3 class="applicant-name"><%= app.name %></h3>
+              <p class="applicant-email"><%= app.email %></p>
+            </div>
+            <div class="score-badge">Match: <%= app.matchScore %>%</div>
+          </div>
+
+          <div class="detail-section">
+            <p class="detail-label"><i class="fas fa-tools"></i> Skills</p>
+            <p class="detail-content"><%= app.extractedSkills %></p>
+          </div>
+
+          <div class="detail-section">
+            <p class="detail-label">
+              <i class="fas fa-briefcase"></i> Experience
+            </p>
+            <p class="detail-content"><%= app.experienceSummary %></p>
+          </div>
+
+          <div class="detail-section">
+            <p class="detail-label">
+              <i class="fas fa-graduation-cap"></i> Education
+            </p>
+            <p class="detail-content"><%= app.education %></p>
+          </div>
+
+          <div class="detail-section">
+            <p class="detail-label">
+              <i class="fas fa-chart-bar"></i> AI Analysis
+            </p>
+            <p class="detail-content"><%= app.analysis %></p>
+          </div>
+
+          <div class="actions">
+            <form
+              action="/applications/<%= app.id %>?_method=DELETE"
+              method="POST"
+            >
+              <button type="submit" class="btn btn-delete">
+                <i class="fas fa-trash-alt"></i> Delete Application
+              </button>
+            </form>
+          </div>
+        </div>
+        <% }); %>
+      </div>
+      <% }); %> <% } %>
+    </div>
+  </body>
+</html>
