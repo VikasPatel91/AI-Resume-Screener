@@ -12,7 +12,7 @@ export const createJob = (req: Request, res: Response) => {
 
   if (isDuplicate) {
     return res.status(400).render('jobForm', {
-      error: 'A job with this title already exists!',
+      error: 'Job title already exists. Please choose a different title.',
       oldInput: { title, description }
     });
   }
@@ -30,7 +30,6 @@ export const createJob = (req: Request, res: Response) => {
     job: newJob
   });
 };
-
 
 export const getJob = (req: Request, res: Response) => {
   const jobs = readJson<Job>('jobs.json');
